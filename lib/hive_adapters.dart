@@ -1,7 +1,7 @@
 import 'package:crdt/crdt.dart';
 import 'package:hive/hive.dart';
 
-import 'crdt_hive.dart';
+import 'hive_crdt.dart';
 
 class HlcAdapter extends TypeAdapter<Hlc> {
   @override
