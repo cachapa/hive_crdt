@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hive_crdt.iml" filepath="$PROJECT_DIR$/.idea/hive_crdt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/crdt_hive.iml" filepath="$PROJECT_DIR$/.idea/crdt_hive.iml" />
     </modules>
   </component>
 </project>

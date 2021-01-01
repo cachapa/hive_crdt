@@ -1,18 +1,18 @@
 import 'package:crdt/crdt.dart';
 import 'package:hive/hive.dart';
 
-class HiveCrdt<K, V> extends Crdt<K, V> {
+class CrdtHive<K, V> extends Crdt<K, V> {
   @override
   final String nodeId;
 
   final Box<ModRecord> _box;
 
-  HiveCrdt._internal(this._box, this.nodeId);
+  CrdtHive._internal(this._box, this.nodeId);
 
-  static Future<HiveCrdt<K, V>> open<K, V>(String name, String nodeId,
+  static Future<CrdtHive<K, V>> open<K, V>(String name, String nodeId,
       {String path}) async {
     final box = await Hive.openBox<ModRecord>(name, path: path);
-    return HiveCrdt<K, V>._internal(box, nodeId);
+    return CrdtHive<K, V>._internal(box, nodeId);
   }
 
   @override
