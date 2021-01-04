@@ -1,6 +1,6 @@
-import 'package:hive_crdt/hive_crdt.dart';
-import 'package:hive_crdt/hive_adapters.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_crdt/hive_adapters.dart';
+import 'package:hive_crdt/hive_crdt.dart';
 import 'package:test/test.dart';
 
 import 'crdt_test.dart';
@@ -12,13 +12,13 @@ void main() {
   Hive.registerAdapter(HlcAdapter(42, nodeId));
   Hive.registerAdapter(RecordAdapter<int>(43));
 
-  crdtTests(nodeId,
+  crdtTests<HiveCrdt<String, int>>(nodeId,
       asyncSetup: () =>
           HiveCrdt.open<String, int>('test', nodeId, path: 'test_store'),
       asyncTearDown: (crdt) => crdt.deleteStore());
 
   group('Basic tests', () {
-    HiveCrdt<String, int> crdt;
+    late HiveCrdt<String, int> crdt;
 
     setUp(() async {
       crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
@@ -59,7 +59,7 @@ void main() {
   });
 
   group('Changeset', () {
-    HiveCrdt<String, int> crdt;
+    late HiveCrdt<String, int> crdt;
 
     setUp(() async {
       crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
@@ -73,8 +73,8 @@ void main() {
       final map = crdt.recordMap(modifiedSince: hlc);
       expect(map.length, 2);
       expect(map['a'], isNull);
-      expect(map['b'].value, 2);
-      expect(map['c'].value, 3);
+      expect(map['b']!.value, 2);
+      expect(map['c']!.value, 3);
     });
 
     test('All', () {
@@ -101,7 +101,7 @@ void main() {
   });
 
   group('DateTime key', () {
-    HiveCrdt<DateTime, int> crdt;
+    late HiveCrdt<DateTime, int> crdt;
 
     setUp(() async {
       crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
@@ -124,7 +124,7 @@ void main() {
   });
 
   group('Watches', () {
-    HiveCrdt<String, int> crdt;
+    late HiveCrdt<String, int> crdt;
 
     setUp(() async {
       crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');

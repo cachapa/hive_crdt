@@ -5,15 +5,15 @@ import 'package:test/test.dart';
 void main() {}
 
 void crdtTests<T extends Crdt<String, int>>(String nodeId,
-    {T Function() syncSetup,
-    Future<T> Function() asyncSetup,
-    void Function(T crdt) syncTearDown,
-    Future<void> Function(T crdt) asyncTearDown}) {
+    {T Function()? syncSetup,
+    Future<T> Function()? asyncSetup,
+    void Function(T crdt)? syncTearDown,
+    Future<void> Function(T crdt)? asyncTearDown}) {
   group('Basic', () {
-    Crdt<String, int> crdt;
+    late T crdt;
 
     setUp(() async {
-      crdt = syncSetup != null ? syncSetup() : await asyncSetup();
+      crdt = syncSetup != null ? syncSetup() : await asyncSetup!();
     });
 
     test('Node ID', () {
@@ -93,10 +93,10 @@ void crdtTests<T extends Crdt<String, int>>(String nodeId,
   });
 
   group('Watch', () {
-    Crdt crdt;
+    late T crdt;
 
     setUp(() async {
-      crdt = syncSetup != null ? syncSetup() : await asyncSetup();
+      crdt = syncSetup != null ? syncSetup() : await asyncSetup!();
     });
 
     test('All changes', () async {

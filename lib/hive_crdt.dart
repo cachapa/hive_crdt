@@ -11,7 +11,7 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
   HiveCrdt(Box<Record> box, this.nodeId) : _box = box;
 
   static Future<HiveCrdt<K, V>> open<K, V>(String name, String nodeId,
-      {String path}) async {
+      {String? path}) async {
     final box = await Hive.openBox<Record>(name, path: path);
     return HiveCrdt<K, V>(box, nodeId);
   }
@@ -29,13 +29,13 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
   void putRecords(Map<K, Record<V>> recordMap) => _box.putAll(recordMap);
 
   @override
-  Map<K, Record<V>> recordMap({Hlc modifiedSince}) => (_box.toMap()
+  Map<K, Record<V>> recordMap({Hlc? modifiedSince}) => (_box.toMap()
         ..removeWhere((_, record) =>
             record.modified.logicalTime < (modifiedSince?.logicalTime ?? 0)))
       .map((key, value) => MapEntry(_decode(key), value as Record<V>));
 
   @override
-  Stream<MapEntry<K, V>> watch({K key}) => _box
+  Stream<MapEntry<K, V?>> watch({K? key}) => _box
       .watch(key: key)
       .map((event) => MapEntry<K, V>(event.key, event.value.value));
 
