@@ -1,6 +1,6 @@
-import 'package:hive/hive.dart';
 import 'package:crdt_hive/crdt_hive.dart';
 import 'package:crdt_hive/hive_adapters.dart';
+import 'package:hive/hive.dart';
 import 'package:test/test.dart';
 
 final nodeId = 'test_node_id';
@@ -8,8 +8,7 @@ final nodeId = 'test_node_id';
 void main() {
   Hive.init('.');
   Hive.registerAdapter(HlcAdapter(42, nodeId));
-  Hive.registerAdapter(RecordAdapter(43));
-  Hive.registerAdapter(ModRecordAdapter(44));
+  Hive.registerAdapter(RecordAdapter<int>(43));
 
   group('Basic tests', () {
     CrdtHive<String, int> crdt;
@@ -52,34 +51,6 @@ void main() {
     });
   });
 
-  group('Queries', () {
-    CrdtHive<int, int> crdt;
-
-    setUp(() async {
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
-      crdt.putAll(Map.fromIterable(List.generate(20, (index) => index)));
-    });
-
-    test('From key', () {
-      final values = crdt.between(startKey: 15);
-      expect(values, [15, 16, 17, 18, 19]);
-    });
-
-    test('Between keys', () {
-      final values = crdt.between(startKey: 5, endKey: 10);
-      expect(values, [5, 6, 7, 8, 9, 10]);
-    });
-
-    test('Up to key', () {
-      final values = crdt.between(endKey: 5);
-      expect(values, [0, 1, 2, 3, 4, 5]);
-    });
-
-    tearDown(() async {
-      await crdt.deleteStore();
-    });
-  });
-
   group('Changeset', () {
     CrdtHive<String, int> crdt;
 
@@ -87,42 +58,23 @@ void main() {
       crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
     });
 
-    test('To', () {
-      crdt.put('a', 1);
-      crdt.put('b', 2);
-      final hlc = crdt.canonicalTime;
-      crdt.put('c', 3);
-      final values = crdt.changeset(to: hlc);
-      expect(values.length, 1);
-      expect(values['a'].value, 1);
-    });
-
-    test('Between', () {
-      crdt.put('a', 1);
-      final from = crdt.canonicalTime;
-      crdt.put('b', 2);
-      crdt.put('c', 3);
-      final to = crdt.canonicalTime;
-      final values = crdt.changeset(from: from, to: to);
-      expect(values.length, 1);
-      expect(values['b'].value, 2);
-    });
-
     test('From', () {
       crdt.put('a', 1);
       crdt.put('b', 2);
       final hlc = crdt.canonicalTime;
       crdt.put('c', 3);
-      final values = crdt.changeset(from: hlc);
-      expect(values.length, 1);
-      expect(values['c'].value, 3);
+      final map = crdt.recordMap(modifiedSince: hlc);
+      expect(map.length, 2);
+      expect(map['a'], isNull);
+      expect(map['b'].value, 2);
+      expect(map['c'].value, 3);
     });
 
     test('All', () {
       crdt.put('a', 1);
       crdt.put('b', 2);
       crdt.put('c', 3);
-      final values = crdt.changeset();
+      final values = crdt.recordMap();
       expect(values.values.map((e) => e.value), [1, 2, 3]);
     });
 
@@ -131,8 +83,8 @@ void main() {
       crdt.put('b', 2);
       final hlc = crdt.canonicalTime;
       crdt.put('c', 3);
-      final json = crdt.jsonChangeset(from: hlc);
-      expect(json, startsWith('{"c":{"hlc":'));
+      final json = crdt.toJson(modifiedSince: hlc);
+      expect(json, startsWith('{"b":{"hlc":'));
       expect(json, endsWith(',"value":3}}'));
     });
 
@@ -155,7 +107,6 @@ void main() {
 
     test('Read datetime from store', () async {
       crdt.put(DateTime(1974, 04, 25, 00, 20), 42);
-
       crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
       expect(crdt.get(DateTime(1974, 04, 25, 00, 20)), 42);
     });
