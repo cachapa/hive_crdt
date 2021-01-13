@@ -4,15 +4,14 @@ import 'package:hive/hive.dart';
 class CrdtHive<K, V> extends Crdt<K, V> {
   @override
   final String nodeId;
-
   final Box<Record> _box;
 
-  CrdtHive._internal(this._box, this.nodeId);
+  CrdtHive(Box<Record> box, this.nodeId) : _box = box;
 
   static Future<CrdtHive<K, V>> open<K, V>(String name, String nodeId,
       {String path}) async {
     final box = await Hive.openBox<Record>(name, path: path);
-    return CrdtHive<K, V>._internal(box, nodeId);
+    return CrdtHive<K, V>(box, nodeId);
   }
 
   @override
