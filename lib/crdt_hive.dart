@@ -1,6 +1,8 @@
 import 'package:crdt/crdt.dart';
 import 'package:hive/hive.dart';
 
+export 'package:crdt/crdt.dart';
+
 class CrdtHive<K, V> extends Crdt<K, V> {
   @override
   final String nodeId;
@@ -32,6 +34,7 @@ class CrdtHive<K, V> extends Crdt<K, V> {
             record.modified.logicalTime < (modifiedSince?.logicalTime ?? 0)))
       .map((key, value) => MapEntry(_decode(key), value as Record<V>));
 
+  @override
   Stream<MapEntry<K, V>> watch({K key}) => _box
       .watch(key: key)
       .map((event) => MapEntry<K, V>(event.key, event.value.value));

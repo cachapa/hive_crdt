@@ -1,3 +1,6 @@
+## 1.0.0-pre.3
+- Update `crdt` dependency
+
 ## 1.0.0-pre.2
 - Update `crdt` dependency
 
