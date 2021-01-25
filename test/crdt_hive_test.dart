@@ -3,12 +3,19 @@ import 'package:crdt_hive/hive_adapters.dart';
 import 'package:hive/hive.dart';
 import 'package:test/test.dart';
 
+import 'crdt_test.dart';
+
 final nodeId = 'test_node_id';
 
 void main() {
   Hive.init('.');
   Hive.registerAdapter(HlcAdapter(42, nodeId));
   Hive.registerAdapter(RecordAdapter<int>(43));
+
+  crdtTests(nodeId,
+      asyncSetup: () =>
+          CrdtHive.open<String, int>('test', nodeId, path: 'test_store'),
+      asyncTearDown: (crdt) => crdt.deleteStore());
 
   group('Basic tests', () {
     CrdtHive<String, int> crdt;

@@ -1,4 +1,8 @@
-## 1.0.0-pre.3
+## 1.0.0-pre.4
+- Update `crdt` dependency
+- Implement basic tests
+
+### 1.0.0-pre.3
 - Update `crdt` dependency
 
 ## 1.0.0-pre.2
