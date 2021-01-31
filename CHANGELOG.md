@@ -1,3 +1,6 @@
+## 1.0.0-pre.5
+- Rename project
+
 ## 1.0.0-pre.4
 - Update `crdt` dependency
 - Implement basic tests

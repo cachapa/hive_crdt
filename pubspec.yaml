@@ -1,9 +1,9 @@
-name: crdt_hive
+name: hive_crdt
 description: A CRDT backed by a Hive store.
-version: 1.0.0-pre.4
-homepage: https://pub.dev/packages/crdt_hive
-repository: https://github.com/cachapa/crdt_hive
-issue_tracker: https://github.com/cachapa/crdt_hive/issues
+version: 1.0.0-pre.5
+homepage: https://pub.dev/packages/hive_crdt
+repository: https://github.com/cachapa/hive_crdt
+issue_tracker: https://github.com/cachapa/hive_crdt/issues
 
 environment:
   sdk: '>=2.7.0 <3.0.0'

@@ -3,17 +3,17 @@ import 'package:hive/hive.dart';
 
 export 'package:crdt/crdt.dart';
 
-class CrdtHive<K, V> extends Crdt<K, V> {
+class HiveCrdt<K, V> extends Crdt<K, V> {
   @override
   final String nodeId;
   final Box<Record> _box;
 
-  CrdtHive(Box<Record> box, this.nodeId) : _box = box;
+  HiveCrdt(Box<Record> box, this.nodeId) : _box = box;
 
-  static Future<CrdtHive<K, V>> open<K, V>(String name, String nodeId,
+  static Future<HiveCrdt<K, V>> open<K, V>(String name, String nodeId,
       {String path}) async {
     final box = await Hive.openBox<Record>(name, path: path);
-    return CrdtHive<K, V>(box, nodeId);
+    return HiveCrdt<K, V>(box, nodeId);
   }
 
   @override

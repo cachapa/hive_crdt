@@ -1,5 +1,5 @@
-import 'package:crdt_hive/crdt_hive.dart';
-import 'package:crdt_hive/hive_adapters.dart';
+import 'package:hive_crdt/hive_crdt.dart';
+import 'package:hive_crdt/hive_adapters.dart';
 import 'package:hive/hive.dart';
 import 'package:test/test.dart';
 
@@ -14,14 +14,14 @@ void main() {
 
   crdtTests(nodeId,
       asyncSetup: () =>
-          CrdtHive.open<String, int>('test', nodeId, path: 'test_store'),
+          HiveCrdt.open<String, int>('test', nodeId, path: 'test_store'),
       asyncTearDown: (crdt) => crdt.deleteStore());
 
   group('Basic tests', () {
-    CrdtHive<String, int> crdt;
+    HiveCrdt<String, int> crdt;
 
     setUp(() async {
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
     });
 
     test('Write value', () {
@@ -48,21 +48,21 @@ void main() {
 
   group('Serialization', () {
     test('Reload box', () async {
-      var crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      var crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
       crdt.put('x', 1);
       await crdt.close();
 
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
       expect(crdt.get('x'), 1);
       await crdt.deleteStore();
     });
   });
 
   group('Changeset', () {
-    CrdtHive<String, int> crdt;
+    HiveCrdt<String, int> crdt;
 
     setUp(() async {
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
     });
 
     test('From', () {
@@ -101,10 +101,10 @@ void main() {
   });
 
   group('DateTime key', () {
-    CrdtHive<DateTime, int> crdt;
+    HiveCrdt<DateTime, int> crdt;
 
     setUp(() async {
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
     });
 
     test('Datetime key', () {
@@ -114,7 +114,7 @@ void main() {
 
     test('Read datetime from store', () async {
       crdt.put(DateTime(1974, 04, 25, 00, 20), 42);
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
       expect(crdt.get(DateTime(1974, 04, 25, 00, 20)), 42);
     });
 
@@ -124,10 +124,10 @@ void main() {
   });
 
   group('Watches', () {
-    CrdtHive<String, int> crdt;
+    HiveCrdt<String, int> crdt;
 
     setUp(() async {
-      crdt = await CrdtHive.open('test', nodeId, path: 'test_store');
+      crdt = await HiveCrdt.open('test', nodeId, path: 'test_store');
     });
 
     test('Watch all changes', () async {
