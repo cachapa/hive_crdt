@@ -1,5 +1,5 @@
 name: hive_crdt
-description: A CRDT backed by a Hive store.
+description: Dart implementation of Conflict-free Replicated Data Types (CRDTs), backed by a Hive store.
 version: 0.1.0
 homepage: https://github.com/cachapa/hive_crdt
 repository: https://github.com/cachapa/hive_crdt
