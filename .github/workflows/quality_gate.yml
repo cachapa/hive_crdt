@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image:  google/dart:beta
+      image:  google/dart:latest
 
     steps:
       - uses: actions/checkout@v1
@@ -18,4 +18,4 @@ jobs:
       - name: Static code analysis
         run: dart analyze --fatal-infos
       - name: Run tests
-        run: dart --no-sound-null-safety test
+        run: dart test
