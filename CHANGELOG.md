@@ -1,3 +1,6 @@
+## 1.0.2
+- Fix (de)serialization of deleted records
+
 ## 1.0.1
 - Migrate to Dart null safety
 

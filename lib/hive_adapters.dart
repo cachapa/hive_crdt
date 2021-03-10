@@ -24,13 +24,16 @@ class RecordAdapter<T> extends TypeAdapter<Record> {
 
   @override
   Record read(BinaryReader reader) {
-    return Record<T>(reader.read(), reader.read(), reader.read());
+    final hlc = reader.read();
+    final modified = reader.read();
+    final value = reader.read();
+    return Record<T>(hlc, value, modified);
   }
 
   @override
   void write(BinaryWriter writer, Record obj) {
     writer.write(obj.hlc);
-    writer.write(obj.value);
     writer.write(obj.modified);
+    writer.write(obj.value);
   }
 }
