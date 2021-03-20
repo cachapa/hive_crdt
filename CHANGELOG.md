@@ -1,3 +1,6 @@
+## 1.0.3
+- Fix getRecord returning non-nullable type
+
 ## 1.0.2
 - Fix (de)serialization of deleted records
 
