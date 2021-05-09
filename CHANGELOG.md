@@ -1,3 +1,6 @@
+## 1.1.0
+- Breaking: Remove nodeId from HlcAdapter, please use HlcCompatAdapter for backward compatibility
+
 ## 1.0.3
 - Fix getRecord returning non-nullable type
 
