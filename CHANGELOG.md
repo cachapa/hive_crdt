@@ -1,3 +1,6 @@
+## 2.0.0
+- Reapply breaking change: Remove nodeId from HlcAdapter, please use HlcCompatAdapter for backward compatibility
+
 ## 1.1.1
 - Revert breaking change on minor version bump
 
