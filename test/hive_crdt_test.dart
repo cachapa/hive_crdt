@@ -9,7 +9,7 @@ final nodeId = 'test_node_id';
 
 void main() {
   Hive.init('.');
-  Hive.registerAdapter(HlcAdapter<String>(42));
+  Hive.registerAdapter(HlcAdapter(42, nodeId));
   Hive.registerAdapter(RecordAdapter<int>(43));
 
   crdtTests<HiveCrdt<String, int>>(nodeId,

@@ -1,30 +1,16 @@
 import 'package:crdt/crdt.dart';
 import 'package:hive/hive.dart';
 
-class HlcAdapter<T> extends TypeAdapter<Hlc> {
+class HlcAdapter extends TypeAdapter<Hlc> {
   @override
   final int typeId;
 
-  HlcAdapter(this.typeId);
+  final String nodeId;
+
+  HlcAdapter(this.typeId, this.nodeId);
 
   @override
-  Hlc read(BinaryReader reader, [T Function(String value)? idDecoder]) =>
-      Hlc<T>.parse(reader.read(), idDecoder);
-
-  @override
-  void write(BinaryWriter writer, Hlc obj) => writer.write(obj.toString());
-}
-
-class HlcCompatAdapter<T> extends TypeAdapter<Hlc> {
-  @override
-  final int typeId;
-  final T nodeId;
-
-  HlcCompatAdapter(this.typeId, this.nodeId);
-
-  @override
-  Hlc read(BinaryReader reader) =>
-      Hlc<T>.fromLogicalTime(reader.read(), nodeId);
+  Hlc read(BinaryReader reader) => Hlc.fromLogicalTime(reader.read(), nodeId);
 
   @override
   void write(BinaryWriter writer, Hlc obj) => writer.write(obj.logicalTime);
