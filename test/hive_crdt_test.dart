@@ -134,10 +134,8 @@ void main() {
       final streamTest = expectLater(
           crdt.watch(),
           emitsInAnyOrder([
-            (MapEntry<String, int> event) =>
-                event.key == 'x' && event.value == 1,
-            (MapEntry<String, int> event) =>
-                event.key == 'y' && event.value == 2,
+            (event) => event.key == 'x' && event.value == 1,
+            (event) => event.key == 'y' && event.value == 2,
           ]));
       crdt.put('x', 1);
       crdt.put('y', 2);
@@ -152,6 +150,21 @@ void main() {
           ));
       crdt.put('x', 1);
       crdt.put('y', 2);
+      await streamTest;
+    });
+
+    test('Watch purge', () async {
+      final streamTest = expectLater(
+          crdt.watch(),
+          emitsInAnyOrder([
+            (event) => event.key == 'x' && event.value == 1,
+            (event) => event.key == 'y' && event.value == 2,
+            (event) => event.key == 'x' && event.value == null,
+            (event) => event.key == 'y' && event.value == null,
+          ]));
+      crdt.put('x', 1);
+      crdt.put('y', 2);
+      crdt.purge();
       await streamTest;
     });
 

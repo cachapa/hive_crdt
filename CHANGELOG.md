@@ -1,3 +1,6 @@
+## 2.0.2
+- Fix watching for changes during a store purge
+
 ## 2.0.1
 - Add purge() method to clear the data store
 

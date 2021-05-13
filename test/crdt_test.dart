@@ -103,10 +103,8 @@ void crdtTests<T extends Crdt<String, int>>(String nodeId,
       final streamTest = expectLater(
           crdt.watch(),
           emitsInAnyOrder([
-            (MapEntry<String, int> event) =>
-                event.key == 'x' && event.value == 1,
-            (MapEntry<String, int> event) =>
-                event.key == 'y' && event.value == 2,
+            (event) => event.key == 'x' && event.value == 1,
+            (event) => event.key == 'y' && event.value == 2,
           ]));
       crdt.put('x', 1);
       crdt.put('y', 2);

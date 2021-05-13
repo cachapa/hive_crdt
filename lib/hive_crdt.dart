@@ -37,7 +37,7 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
   @override
   Stream<MapEntry<K, V?>> watch({K? key}) => _box
       .watch(key: key)
-      .map((event) => MapEntry<K, V>(event.key, event.value.value));
+      .map((event) => MapEntry<K, V?>(event.key, event.value?.value));
 
   @override
   void purge() => _box.clear();
