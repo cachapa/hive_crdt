@@ -39,6 +39,9 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
       .watch(key: key)
       .map((event) => MapEntry<K, V>(event.key, event.value.value));
 
+  @override
+  void purge() => _box.clear();
+
   Future<void> close() => _box.close();
 
   /// Permanently deletes the store from disk. Useful for testing.

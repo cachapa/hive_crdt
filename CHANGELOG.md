@@ -1,3 +1,6 @@
+## 2.0.1
+- Add purge() method to clear the data store
+
 ## 2.0.0
 - Reapply breaking change: Remove nodeId from HlcAdapter, please use HlcCompatAdapter for backward compatibility
 
