@@ -1,3 +1,6 @@
+## 2.0.3
+- Update to Dart 3
+
 ## 2.0.2
 - Fix watching for changes during a store purge
 

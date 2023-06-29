@@ -23,7 +23,7 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
   Record<V>? getRecord(K key) => _box.get(_encode(key)) as Record<V>?;
 
   @override
-  void putRecord(K key, Record<V> record) => _box.put(_encode(key), record);
+  void putRecord(K key, Record<V> value) => _box.put(_encode(key), value);
 
   @override
   void putRecords(Map<K, Record<V>> recordMap) => _box.putAll(recordMap);

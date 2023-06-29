@@ -32,7 +32,7 @@ class HlcCompatAdapter<T> extends TypeAdapter<Hlc> {
 
 class RecordAdapter<T> extends TypeAdapter<Record> {
   @override
-  final typeId;
+  final int typeId;
 
   RecordAdapter(this.typeId);
 
