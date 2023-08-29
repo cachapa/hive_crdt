@@ -77,6 +77,19 @@ void main() {
       expect(map['c']!.value, 3);
     });
 
+    test('After', () {
+      crdt.put('a', 1);
+      crdt.put('b', 2);
+      final hlc = crdt.canonicalTime;
+      crdt.put('c', 3);
+
+      final mapAfter = crdt.recordMapAfter(hlc);
+      expect(mapAfter.length, 1);
+      expect(mapAfter['a'], isNull);
+      expect(mapAfter['b'], isNull);
+      expect(mapAfter['c']!.value, 3);
+    });
+
     test('All', () {
       crdt.put('a', 1);
       crdt.put('b', 2);
