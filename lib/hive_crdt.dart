@@ -31,12 +31,7 @@ class HiveCrdt<K, V> extends Crdt<K, V> {
   @override
   Map<K, Record<V>> recordMap({Hlc? modifiedSince}) => (_box.toMap()
         ..removeWhere((_, record) =>
-            record.modified.logicalTime < (modifiedSince?.logicalTime ?? 0)))
-      .map((key, value) => MapEntry(_decode(key), value as Record<V>));
-
-  Map<K, Record<V>> recordMapAfter(Hlc modifiedAfter) => (_box.toMap()
-        ..removeWhere((_, record) =>
-            record.modified.logicalTime <= (modifiedAfter.logicalTime ?? 0)))
+            record.modified.logicalTime <= (modifiedSince?.logicalTime ?? 0)))
       .map((key, value) => MapEntry(_decode(key), value as Record<V>));
 
   @override

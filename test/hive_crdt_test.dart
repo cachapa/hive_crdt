@@ -71,23 +71,10 @@ void main() {
       final hlc = crdt.canonicalTime;
       crdt.put('c', 3);
       final map = crdt.recordMap(modifiedSince: hlc);
-      expect(map.length, 2);
+      expect(map.length, 1);
       expect(map['a'], isNull);
-      expect(map['b']!.value, 2);
+      expect(map['b'], isNull);
       expect(map['c']!.value, 3);
-    });
-
-    test('After', () {
-      crdt.put('a', 1);
-      crdt.put('b', 2);
-      final hlc = crdt.canonicalTime;
-      crdt.put('c', 3);
-
-      final mapAfter = crdt.recordMapAfter(hlc);
-      expect(mapAfter.length, 1);
-      expect(mapAfter['a'], isNull);
-      expect(mapAfter['b'], isNull);
-      expect(mapAfter['c']!.value, 3);
     });
 
     test('All', () {
@@ -104,7 +91,7 @@ void main() {
       final hlc = crdt.canonicalTime;
       crdt.put('c', 3);
       final json = crdt.toJson(modifiedSince: hlc);
-      expect(json, startsWith('{"b":{"hlc":'));
+      expect(json, startsWith('{"c":{"hlc":'));
       expect(json, endsWith(',"value":3}}'));
     });
 
