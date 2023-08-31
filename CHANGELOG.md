@@ -1,3 +1,6 @@
+## 2.0.4
+- Avoid repeated records when generating changesets using `since`
+
 ## 2.0.3
 - Update to Dart 3
 
