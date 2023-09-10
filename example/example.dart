@@ -1,10 +1,3 @@
-Conflict-free Replicated Data Types (CRDTs) using by [Hive](https://pub.dev/packages/hive) stores for data persistence.
-
-This package implements [crdt](https://github.com/cachapa/crdt) and is compatible with [crdt_sync](https://github.com/cachapa/crdt_sync).
-
-## Usage
-
-```dart
 import 'package:hive/hive.dart';
 import 'package:hive_crdt/src/hive_adapters.dart';
 import 'package:hive_crdt/src/hive_crdt.dart';
@@ -34,8 +27,3 @@ Future<void> main() async {
 
   print('crdt1: ${crdt1.getMap('table')}');
 }
-```
-
-## Features and bugs
-
-Please file feature requests and bugs at the [issue tracker](https://github.com/cachapa/hive_crdt/issues).

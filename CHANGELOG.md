@@ -1,3 +1,12 @@
+## 3.0.0
+This version introduces a major refactor which results in multiple breaking changes in line with `crdt` 5.0.0.
+
+This package is now compatible with [crdt_sync](https://github.com/cachapa/crdt_sync), thereby abstracting the communication protocol and network management for real-time remote synchronization.
+
+Changes:
+- Removed direct interaction with the `Record` and `Hlc` classes
+- Added multiple table support
+
 ## 2.0.4
 - Avoid repeated records when generating changesets using `since`
 
