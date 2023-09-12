@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_crdt/src/hive_adapters.dart';
 import 'package:hive_crdt/src/hive_crdt.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 Future<void> get _delay => Future.delayed(Duration(milliseconds: 1));
 
@@ -32,8 +33,7 @@ void main() {
     });
 
     test('Node ID', () {
-      print(crdt.isEmpty);
-      // expect(Uuid.isValidUUID(fromString: crdt.nodeId), true);
+      expect(Uuid.isValidUUID(fromString: crdt.nodeId), true);
     });
 
     test('Empty', () {
@@ -228,13 +228,11 @@ void main() {
     });
 
     test('After HLC', () {
-      print(crdt1.canonicalTime);
       expect(crdt.getChangeset(modifiedAfter: crdt1.canonicalTime),
           crdt2.getChangeset());
     });
 
     test('Empty changeset', () {
-      print(crdt2.canonicalTime);
       expect(crdt.getChangeset(modifiedAfter: crdt2.canonicalTime), {});
     });
 
