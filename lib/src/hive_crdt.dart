@@ -58,10 +58,11 @@ class HiveCrdt extends MapCrdtBase {
     }
   }
 
-  Stream<(String key, dynamic value)> watch(String table, {String? key}) {
+  @override
+  Stream<({String key, dynamic value})> watch(String table, {String? key}) {
     if (!tables.contains(table)) throw 'Unknown table: $table';
     return _boxes[table]!
         .watch(key: key)
-        .map((event) => (event.key, event.value?.value));
+        .map((event) => (key: event.key, value: event.value?.value));
   }
 }

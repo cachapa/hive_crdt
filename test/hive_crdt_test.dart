@@ -367,7 +367,7 @@ void main() {
 
     test('Single change', () async {
       // ignore: unawaited_futures
-      expectLater(crdt.watch('table'), emits(('x', 1)));
+      expectLater(crdt.watch('table'), emits((key: 'x', value: 1)));
       await crdt.put('table', 'x', 1);
     });
 

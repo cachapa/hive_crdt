@@ -1,3 +1,8 @@
+## 3.1.0
+
+- Update to latest `crdt` version
+- Breaking: tweaked signature of `watch` method to match `MapCrdtBase`
+
 ## 3.0.1
 
 - Update to latest `crdt` version
